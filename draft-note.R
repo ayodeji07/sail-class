@@ -6,9 +6,10 @@
 
 
 ## Load Library
-#library(readr)
-library(tidyverse)
 install.packages("readxl")
+library(tidyverse)
+library(esquisse)
+
 
 ### Read Metadata
 Metadata_Country <- read_excel("API_SM.POP.NETM_DS2_en_excel_v2_424013.xls", sheet = 2)
@@ -57,8 +58,19 @@ tibbled_data <- tibble(filtered_data)
 
 # Transpose the data frame
 transposed_data <- tibbled_data %>%
-  pivot_longer(cols = -`Country Name`, names_to = "Year", values_to = "Value") %>%
+  pivot_longer(cols = -`Country Name`, names_to = "year", values_to = "Value") %>%
   pivot_wider(names_from = `Country Name`, values_from = Value)
 
 # Print the transposed data frame
 view(transposed_data)
+
+esquisse::esquisser(transposed_data)
+
+ggplot(transposed_data, aes(x = Year, y = Algeria)) +
+  geom_line() +
+  labs(x = "Year", y = "Data Value", title = "Data Trend for Algeria") +
+  theme_minimal()
+
+
+
+glimpse(transposed_data)
