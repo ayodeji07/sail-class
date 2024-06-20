@@ -50,3 +50,12 @@ filtered_data <- filtered_data %>% arrange(`Country Name`)
 view(filtered_data)
 
 
+tibbled_data <- tibble(filtered_data)
+
+# Transpose the data frame
+transposed_data <- tibbled_data %>%
+  pivot_longer(cols = -`Country Name`, names_to = "Year", values_to = "Value") %>%
+  pivot_wider(names_from = `Country Name`, values_from = Value)
+
+# Print the transposed data frame
+view(transposed_data)
