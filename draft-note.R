@@ -2,7 +2,7 @@
 #Ayodeji
 #setwd("C:/Users/Open user/Desktop/SAIL-DS")
 #Nurudeen
-#setwd("C:/Users/Open User/Desktop/Nurudeen-DS/SAIL-Project")
+setwd("C:/Users/Open User/Desktop/Nurudeen-DS/SAIL-Project")
 
 
 ## Load Library
@@ -72,11 +72,6 @@ transpose_data <- function(filtered_data){
   return(trans_data)
 }
 
-filtered_data$total <- filtered_data %>% 
-                          select(-c(`Country Name`)) %>% 
-                            rowSums()
-
-view(filtered_data)
 
 filtered_data <- wrangle_data("API_SM.POP.NETM_DS2_en_excel_v2_424013.xls")
 view(filtered_data)
@@ -84,12 +79,11 @@ trans_data <- transpose_data(filtered_data)
 view(trans_data)
 
 
-glimpse(cleaned_data %>% select(date, everything()))
-skim(cleaned_data)
-view(cleaned_data)
+filtered_data$total <- filtered_data %>% 
+  select(-c(`Country Name`)) %>% 
+  rowSums()
 
-view(cleaned_data %>% select(date, Nigeria))
-sum(is.na(cleaned_data))
+view(filtered_data)
 
 esquisse::esquisser(trans_data)
 
