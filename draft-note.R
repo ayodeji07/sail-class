@@ -94,7 +94,10 @@ ggplot(filtered_data) +
   aes(x = `Country Name`, y = `total`) +
   geom_col(fill = "#112446") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90L))
+  theme(axis.text.x = element_text(angle = 90L)) +
+  labs(title = "Cummulative Net Migration for African Countries", y = "Net Migration in Millions")
+
+
 # Making Nigeria (~800k net imnigration) as the focus, select countries with more 2M net immigration/Emigration
 # Immgiration: Ethopia, South Africa
 # Emmigration: Sudan, Zimbabwe
@@ -106,7 +109,8 @@ make_trend <- function(data = trans_data, country) {
   ggplot(data) +
     aes(x = date, y = !!country_sym) +  # Use `!!` to unquote the symbol
     geom_line(colour = "#112446") +
-    theme_minimal()
+    theme_minimal() +
+    labs(title = paste0(country, " Migration Trend from 1960 - 2023"), x = "Date", y = "Net Migration in Millions")
 }
 
 
@@ -119,7 +123,7 @@ make_trends <- function(data = trans_data, countries) {
   ggplot(data_long, aes(x = date, y = value, colour = country)) +
     geom_line() +
     theme_minimal() +
-    labs(title = "Trends for Selected Countries", x = "Date", y = "Value", colour = "Country") +
+    labs(title = "Trends for the Selected Countries", x = "Date", y = "Net Migration in Millions", colour = "Country") +
     scale_y_continuous(limits = c(-1000000, 1000000))  # Set y-axis limits
 }
 
@@ -138,6 +142,7 @@ ggplot(filtered_data) +
   aes(x = `Country Name`, y = `1983`) +
   geom_col(fill = "#112446") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90L))
+  theme(axis.text.x = element_text(angle = 90L)) +
+  labs(title = "Nigeria 1983 Net Migration in Comparison to Other African Countries", y = "Net Migration in Millions")
 
 
