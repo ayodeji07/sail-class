@@ -63,7 +63,7 @@ transpose_data <- function(filtered_data){
     pivot_wider(names_from = `Country Name`, values_from = Value)
   
   # Append "-12-31" to each year to represent December 31st of that year
-  transposed_data$date <- as.Date(paste0(transposed_data$year, "-12-31"))
+  transposed_data$date <- as.Date(paste0(transposed_data$year, "-1-1"))
   
   #Put the date column at the beginning and drop the year column
   trans_data <- transposed_data %>% 
@@ -97,7 +97,7 @@ ggplot(filtered_data) +
   theme(axis.text.x = element_text(angle = 90L))
 # Making Nigeria (~800k net imnigration) as the focus, select countries with more 2M net immigration/Emigration
 # Immgiration: Ethopia, South Africa
-# Emmigration: Mali, Morocco, Sudan, Uganda, Zimbabwe
+# Emmigration: Sudan, Zimbabwe
 
 
 # Get the trend for the selected countries
@@ -123,7 +123,7 @@ make_trends <- function(data = trans_data, countries) {
     scale_y_continuous(limits = c(-1000000, 1000000))  # Set y-axis limits
 }
 
-countries <- c("Nigeria", "Ethiopia", "South Africa", "Mali", "Morocco", "Sudan", "Uganda", "Zimbabwe")
+countries <- c("Nigeria", "Ethiopia", "South Africa", "Sudan", "Zimbabwe")
 
 # Plot Trends on a single chat
 make_trends(data = trans_data, countries)
