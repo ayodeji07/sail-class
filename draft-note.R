@@ -12,7 +12,8 @@ pacman::p_load(
   tidyverse,
   esquisse,
   readxl,
-  skimr
+  skimr,
+  
 )
 
 ### Read Metadata
@@ -96,14 +97,42 @@ ggplot(filtered_data) +
   theme(axis.text.x = element_text(angle = 90L))
 # Making Nigeria (~800k net imnigration) as the focus, select countries with more 2M net immigration/Emigration
 # Immgiration: Ethopia, South Africa
-# Emmigration: Mali, Morocco, Susan, Uganda, Zimbabwe
+# Emmigration: Mali, Morocco, Sudan, Uganda, Zimbabwe
 
 
 # Get the trend for the selected countries
-ggplot(trans_data) +
-  aes(x = date, y = Nigeria) +
-  geom_line(colour = "#112446") +
-  theme_minimal()
+make_trend <- function(data = trans_data, country) {
+  country_sym <- sym(country)  # Convert the string to a symbol
+  ggplot(data) +
+    aes(x = date, y = !!country_sym) +  # Use `!!` to unquote the symbol
+    geom_line(colour = "#112446") +
+    theme_minimal()
+}
+
+
+# Get the trend for the selected countries
+make_trends <- function(data = trans_data, countries) {
+  data_long <- data %>%
+    select(date, all_of(countries)) %>%
+    pivot_longer(cols = -date, names_to = "country", values_to = "value")
+  
+  ggplot(data_long, aes(x = date, y = value, colour = country)) +
+    geom_line() +
+    theme_minimal() +
+    labs(title = "Trends for Selected Countries", x = "Date", y = "Value", colour = "Country") +
+    scale_y_continuous(limits = c(-1000000, 1000000))  # Set y-axis limits
+}
+
+countries <- c("Nigeria", "Ethiopia", "South Africa", "Mali", "Morocco", "Sudan", "Uganda", "Zimbabwe")
+
+# Plot Trends on a single chat
+make_trends(data = trans_data, countries)
+
+# Plot trend for each country
+for (country in countries) {
+  print(make_trend(trans_data, country))
+}
+
 
 ggplot(filtered_data) +
   aes(x = `Country Name`, y = `1983`) +
