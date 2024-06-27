@@ -2,7 +2,7 @@
 #Ayodeji
 #setwd("C:/Users/Open user/Desktop/SAIL-DS")
 #Nurudeen
-setwd("C:/Users/Open User/Desktop/Nurudeen-DS/SAIL-Project")
+#setwd("C:/Users/Open User/Desktop/Nurudeen-DS/SAIL-Project")
 
 
 ## Load Library
@@ -74,23 +74,17 @@ transpose_data <- function(filtered_data){
 
 
 filtered_data <- wrangle_data("API_SM.POP.NETM_DS2_en_excel_v2_424013.xls")
-view(filtered_data)
-trans_data <- transpose_data(filtered_data)
-view(trans_data)
-
-
 filtered_data$total <- filtered_data %>% 
   select(-c(`Country Name`)) %>% 
   rowSums()
-
 view(filtered_data)
 
+
+trans_data <- transpose_data(filtered_data)
+view(trans_data)
+
+esquisse::esquisser(filtered_data)
 esquisse::esquisser(trans_data)
-
-
-
-
-
 
 
 ggplot(transposed_data, aes(x = date, y = Algeria)) +
@@ -98,10 +92,5 @@ ggplot(transposed_data, aes(x = date, y = Algeria)) +
   labs(x = "Year", y = "Data Value", title = "Data Trend for Algeria") +
   theme_minimal()
 
-
-
-
-# Print the resulting Date vector
-print(year_date)
 
 
