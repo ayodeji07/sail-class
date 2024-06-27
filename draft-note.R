@@ -86,11 +86,29 @@ view(trans_data)
 esquisse::esquisser(filtered_data)
 esquisse::esquisser(trans_data)
 
+#EDA
 
-ggplot(transposed_data, aes(x = date, y = Algeria)) +
-  geom_line() +
-  labs(x = "Year", y = "Data Value", title = "Data Trend for Algeria") +
+# Test net migration for all the countries
+ggplot(filtered_data) +
+  aes(x = `Country Name`, y = `total`) +
+  geom_col(fill = "#112446") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90L))
+# Making Nigeria (~800k net imnigration) as the focus, select countries with more 2M net immigration/Emigration
+# Immgiration: Ethopia, South Africa
+# Emmigration: Mali, Morocco, Susan, Uganda, Zimbabwe
+
+
+# Get the trend for the selected countries
+ggplot(trans_data) +
+  aes(x = date, y = Nigeria) +
+  geom_line(colour = "#112446") +
   theme_minimal()
 
+ggplot(filtered_data) +
+  aes(x = `Country Name`, y = `1983`) +
+  geom_col(fill = "#112446") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90L))
 
 
