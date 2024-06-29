@@ -85,9 +85,6 @@ wrangle_data <- function(my_data){
 }
 
 
-
-view(filtered_data)
-
 transpose_data <- function(filtered_data){
   # Transpose the data frame
   tibbled_data <- tibble(filtered_data)
@@ -117,10 +114,10 @@ view(filtered_data)
 trans_data <- transpose_data(filtered_data)
 view(trans_data)
 
-esquisse::esquisser(filtered_data)
-esquisse::esquisser(trans_data)
-
 #EDA
+#esquisse::esquisser(filtered_data)
+#esquisse::esquisser(trans_data)
+
 
 # Test net migration for all the countries
 ggplot(filtered_data) +
