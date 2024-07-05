@@ -2,7 +2,7 @@
 #Ayodeji
 setwd("C:/Users/Open user/Desktop/SAIL-DS")
 #Nurudeen
-#setwd("C:/Users/Open User/Desktop/Nurudeen-DS/SAIL-Project")
+#setwd("C:/Users/Open User/Desktop/Nurudeen-DS/group-f/african-net-migration")
 
 
 ## Load Library
@@ -17,7 +17,8 @@ pacman::p_load(
   rnaturalearth,
   janitor,
   tidygeocoder,
-  rnaturalearthdata
+  rnaturalearthdata,
+  scales
 )
 
 #install.packages("rnaturalearthdata")
@@ -26,10 +27,11 @@ pacman::p_load(
 ### Read Metadata
 Metadata_Country <- read_excel("API_SM.POP.NETM_DS2_en_excel_v2_424013.xls", sheet = 2)
 Metadata_Indicator <- read_excel("API_SM.POP.NETM_DS2_en_excel_v2_424013.xls", sheet = 3)
-
+economic_indicator <- read_excel("Nigeria Economy - Kaggle.xlsx")
 
 View(Metadata_Country)
 View(Metadata_Indicator)
+view(economic_indicator)
 
 #Create wrangle function
 wrangle_data <- function(my_data){
@@ -106,7 +108,7 @@ trans_data <- transpose_data(filtered_data)
 
 #EDA
 #esquisse::esquisser(filtered_data)
-#esquisse::esquisser(trans_data)
+esquisse::esquisser(economic_indicator)
 
 
 # Test net migration for all the countries
@@ -130,7 +132,8 @@ make_trend <- function(data = trans_data, country) {
     aes(x = date, y = !!country_sym) +  # Use `!!` to unquote the symbol
     geom_line(colour = "#112446") +
     theme_minimal() +
-    labs(title = paste0(country, " Migration Trend from 1960 - 2023"), x = "Date", y = "Net Migration in Millions")
+    labs(title = paste0(country, " Migration Trend from 1960 - 2023"), x = "Date", y = "Net Migration in Millions") +
+    scale_y_continuous(limits = c(-1000000, 1000000), labels = comma)  # Set y-axis limits
 }
 
 
@@ -144,7 +147,7 @@ make_trends <- function(data = trans_data, countries) {
     geom_line() +
     theme_minimal() +
     labs(title = "Trends for the Selected Countries", x = "Date", y = "Net Migration in Millions", colour = "Country") +
-    scale_y_continuous(limits = c(-1000000, 1000000))  # Set y-axis limits
+    scale_y_continuous(limits = c(-1000000, 1000000), labels = comma)  # Set y-axis limits
 }
 
 countries <- c("Nigeria", "Ethiopia", "South Africa", "Sudan", "Zimbabwe")
@@ -210,4 +213,11 @@ ggplot(data = africa_joined) +
   labs(title = "Net Migration in African Countries",
        fill = "Net Migration") +
   theme(aspect.ratio = 0.8)  # Adjust the aspect ratio as needed
+
+glimpse(economic_indicator)
+
+ggplot(economic_indicator) +
+  aes(x = Year, y = c('Inflation rate', 'Unemployment', 'Government debt')) +
+  geom_line(colour = "#112446") +
+  theme_minimal()
 
