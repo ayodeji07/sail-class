@@ -214,10 +214,20 @@ ggplot(data = africa_joined) +
        fill = "Net Migration") +
   theme(aspect.ratio = 0.8)  # Adjust the aspect ratio as needed
 
-glimpse(economic_indicator)
 
-ggplot(economic_indicator) +
-  aes(x = Year, y = c('Inflation rate', 'Unemployment', 'Government debt')) +
-  geom_line(colour = "#112446") +
-  theme_minimal()
+#view economic indicator dataset
+view(economic_indicator)
 
+
+# Reshape the economic indicator data from wide to long format
+economic_indicator_long <- economic_indicator %>%
+  pivot_longer(cols = c('Inflation rate', 'Unemployment', 'Government debt'),
+               names_to = 'Indicator',
+               values_to = 'Value')
+
+# Create the plot
+ggplot(economic_indicator_long) +
+  aes(x = Year, y = Value, color = Indicator) +
+  geom_line() +
+  theme_minimal() +
+  labs(y = "Value", color = "Indicator", title = "Nigeria Economic Indicator")
