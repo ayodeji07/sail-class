@@ -1,6 +1,6 @@
 ## Set working directory
 #Ayodeji
-setwd("C:/Users/Open user/Desktop/SAIL-DS")
+setwd("C:/Users/Open user/Desktop/SAIL-DS/african-net-migration")
 #Nurudeen
 #setwd("C:/Users/Open User/Desktop/Nurudeen-DS/group-f/african-net-migration")
 
@@ -117,7 +117,8 @@ ggplot(filtered_data) +
   geom_col(fill = "#112446") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90L)) +
-  labs(title = "Cummulative Net Migration for African Countries", y = "Net Migration in Millions")
+  labs(title = "Cummulative Net Migration for African Countries", y = "Net Migration in Millions") +
+  scale_y_continuous(limits = c(-5000000, 3000000), labels = comma)  # Set y-axis limits
 
 
 # Making Nigeria (~800k net imnigration) as the focus, select countries with more 2M net immigration/Emigration
@@ -166,7 +167,8 @@ ggplot(filtered_data) +
   geom_col(fill = "#112446") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90L)) +
-  labs(title = "Nigeria 1983 Net Migration in Comparison to Other African Countries", y = "Net Migration in Millions")
+  labs(title = "Nigeria 1983 Net Migration in Comparison to Other African Countries", y = "Net Migration in Millions") +
+  scale_y_continuous(limits = c(-550000, 200000), labels = comma)  # Set y-axis limits
 
 
 ## Loaded longitude and latiude dataset
